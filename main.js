@@ -27,22 +27,36 @@ entireGameBoard.addEventListener('click', function (event) {
 });
 
 function changePlayerTurn(event) {
-	if (event.target.innerHTML = '') {
-		if (player1.currentPlayer === true){
-			event.target.innerHTML = '🐢'
-			player1.currentPlayer = false
-			renderGameBoard()
-		}  
+	if (player1.currentPlayer === true) {
+		var playerMove = parseInt(event.target.getAttribute("id"))
+		playerArray1.splice(playerMove, 1, '🐢')
+		player1.currentPlayer = false
+		player2.currentPlayer = true
+		event.target.innerHTML = '🐢'
+	} else {
+		var playerMove = parseInt(event.target.getAttribute("id"))
+		playerArray2.splice(playerMove, 1, '🐰')
+		player2.currentPlayer = false
+		player1.currentPlayer = true
+		event.target.innerHTML = '🐰'
+		// invoke checkForWin(newPlayerArray)
 	}
+}
 
-} 
+
+// check for win function. invoke after every time player makes a turn. loop through winning combo. and loop through player array. match up the index positions. if index positions are the same, there's a win.  
+
+
+
 
 
 // GLOBAL VARIABLES:
+playerArray1 = ["", "", "", "", "", "", "", "", ""]
+playerArray2 = ["", "", "", "", "", "", "", "", ""]
 
 // var currentToken;
 
-var gameBoard = ['','',2,3,4,5,6,7,8]
+var gameBoard = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 
 var player1 = {
 	id: 'one',
@@ -58,17 +72,20 @@ var player2 = {
 	currentPlayer: false
 }
 
-
-
 // FUNCTIONS:
 
-function renderGameBoard() {
+function renderGameBoard(gameBoard) {
 	for (var i = 0; i < entireGameBoard.children.length; i++) {
 		entireGameBoard.children[i].innerHTML = gameBoard[i]
 	}
 }
-renderGameBoard()
-                                       
+renderGameBoard(gameBoard)
+
+
+
+
+
+
 // increase a player's wins:
 
 // function increaseWins(player) {
@@ -86,3 +103,9 @@ renderGameBoard()
 // 			renderGameBoard()
 // 		}  
 // 	}
+
+
+	// if (event.target.innerHTML = '' && player1.currentPlayer === true) {
+	// 		event.target.innerHTML = '🐢'
+	// 		player1.currentPlayer = false
+	// 	}  
