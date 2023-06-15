@@ -1,62 +1,58 @@
 // QUERY SELECTORS:
 var entireGameBoard = document.querySelector('.grid-container')
-// console.log(entireGameBoard.children)
 var squares = document.querySelectorAll('.square')
-var square1 = document.querySelector('#square1-container')
-var square2 = document.querySelector('#square2-container')
-var square3 = document.querySelector('#square3-container')
-var square4 = document.querySelector('#square4-container')
-var square5 = document.querySelector('#square5-container')
-var square6 = document.querySelector('#square6-container')
-var square7 = document.querySelector('#square7-container')
-var square8 = document.querySelector('#square8-container')
-var square9 = document.querySelector('#square9-container')
-
 
 
 // EVENT LISTENERS:
 
 entireGameBoard.addEventListener('click', function (event) {
-	console.log(event.target)
+	// console.log(event.target)
 	if (event.target.classList.contains('square')) {
-		// invoke function here
 		changePlayerTurn(event)
-		console.log('hello')
+		// console.log('hello')
+		var winner = checkForWin()
+		if (winner !== null) {
+			console.log(winner.id + ' is the winner!')
+			console.log('Total wins: ' + winner.wins)
+		}
+
 	}
-	// separate function to change the token based on conditional
+
 });
-
-function changePlayerTurn(event) {
-	if (player1.currentPlayer === true) {
-		var playerMove = parseInt(event.target.getAttribute("id"))
-		playerArray1.splice(playerMove, 1, '🐢')
-		player1.currentPlayer = false
-		player2.currentPlayer = true
-		event.target.innerHTML = '🐢'
-	} else {
-		var playerMove = parseInt(event.target.getAttribute("id"))
-		playerArray2.splice(playerMove, 1, '🐰')
-		player2.currentPlayer = false
-		player1.currentPlayer = true
-		event.target.innerHTML = '🐰'
-		// invoke checkForWin(newPlayerArray)
-	}
-}
-
-
-// check for win function. invoke after every time player makes a turn. loop through winning combo. and loop through player array. match up the index positions. if index positions are the same, there's a win.  
-
-
-
 
 
 // GLOBAL VARIABLES:
-playerArray1 = ["", "", "", "", "", "", "", "", ""]
-playerArray2 = ["", "", "", "", "", "", "", "", ""]
 
-// var currentToken;
+var gameBoard = [
+	{
+		move: null
+	},
+	{
+		move: null
+	},
+	{
+		move: null
+	},
+	{
+		move: null
+	},
+	{
+		move: null
+	},
+	{
+		move: null
+	},
+	{
+		move: null
+	},
+	{
+		move: null
+	},
+	{
+		move: null
+	}
+]
 
-var gameBoard = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 
 var player1 = {
 	id: 'one',
@@ -76,36 +72,64 @@ var player2 = {
 
 function renderGameBoard(gameBoard) {
 	for (var i = 0; i < entireGameBoard.children.length; i++) {
-		entireGameBoard.children[i].innerHTML = gameBoard[i]
+		entireGameBoard.children[i].innerHTML = gameBoard[i].move
 	}
 }
 renderGameBoard(gameBoard)
 
 
+function changePlayerTurn(event) {
+	if (player1.currentPlayer === true) {
+		var playerMove = parseInt(event.target.getAttribute("id"))
+		gameBoard[playerMove].move = '🐢'
+		player1.currentPlayer = false
+		player2.currentPlayer = true
+		checkForWin()
+		renderGameBoard(gameBoard)
 
+	} else {
+		var playerMove = parseInt(event.target.getAttribute("id"))
+		gameBoard[playerMove].move = '🐰'
+		player2.currentPlayer = false
+		player1.currentPlayer = true
+		checkForWin()
+		renderGameBoard(gameBoard)
+	}
+}
 
+function checkForWin() {
+	var winningPositions = [
+		[0, 1, 2],
+		[3, 4, 5],
+		[6, 7, 8],
+		[0, 3, 6],
+		[1, 4, 7],
+		[2, 5, 8],
+		[0, 4, 8],
+		[2, 4, 6]
+	]
 
+	for (var i = 0; i < winningPositions.length; i++) {
+		var position = winningPositions[i]
+		var isWinningPosition = true
+		var move = gameBoard[position[0]].move
 
-// increase a player's wins:
-
-// function increaseWins(player) {
-// 	player.wins++
-// }
-// increaseWins(player1)
-// increaseWins(player2)
-
-
-// function changePlayerTurn(event) {
-// 	if (event.target.innerHTML = '') {
-// 		if (player1.currentPlayer === true){
-// 			event.target.innerHTML = '🐢'
-// 			player1.currentPlayer = false
-// 			renderGameBoard()
-// 		}  
-// 	}
-
-
-	// if (event.target.innerHTML = '' && player1.currentPlayer === true) {
-	// 		event.target.innerHTML = '🐢'
-	// 		player1.currentPlayer = false
-	// 	}  
+		for (var j = 0; j < position.length; j++) {
+			var index = position[j]
+			if (!gameBoard[index].move || gameBoard[index].move !== move) {
+				isWinningPosition = false
+				break;
+			}
+		}
+		if (isWinningPosition === true) {
+			if (move === '🐢') {
+				player1.wins++
+				return player1
+			} else if (move === '🐰') {
+				player2.wins++
+				return player2
+			}
+		}
+	}
+	return null
+}
