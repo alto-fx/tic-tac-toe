@@ -90,62 +90,46 @@ h2 {
 
 .square {
 	display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row-reverse;
-    align-items: center;
-    justify-content: center;
+	flex-wrap: nowrap;
+	flex-direction: row-reverse;
+	align-items: center;
+	justify-content: center;
+	border: solid rgb(64, 0, 255);
+	font-size: 3.5em;
 }
 
 .square:nth-of-type(1) {
-	/* background-color: blue; */
-	border: solid rgb(64, 0, 255);
 	border-width: 0px 7px 7px 0px;
 }
 
 .square:nth-of-type(2) {
-	/* background-color: red; */
-	border: solid rgb(64, 0, 255);
 	border-width: 0px 7px 7px 0px;
 }
 
 .square:nth-of-type(3) {
-	/* background-color: green; */
-	border: solid rgb(64, 0, 255);
 	border-width: 0px 0px 7px 0px;
 }
 
 .square:nth-of-type(4) {
-	/* background-color: rgb(60, 35, 66); */
-	border: solid rgb(64, 0, 255);
 	border-width: 0px 7px 7px 0px;
 }
 
 .square:nth-of-type(5) {
-	/* background-color: rgb(219, 209, 68); */
-	border: solid rgb(64, 0, 255);
 	border-width: 0px 7px 7px 0px;
 }
 
 .square:nth-of-type(6) {
-	/* background-color: rgb(219, 209, 68); */
-	border: solid rgb(64, 0, 255);
 	border-width: 0px 0px 7px 0px;
 }
 
 .square:nth-of-type(7) {
-	/* background-color: rgb(219, 169, 68); */
-	border: solid rgb(64, 0, 255);
 	border-width: 0px 7px 0px 0px;
 }
 
 .square:nth-of-type(8) {
-	/* background-color: rgb(27, 100, 127); */
-	border: solid rgb(64, 0, 255);
 	border-width: 0px 7px 0px 0px;
 }
 
 .square:nth-of-type(9) {
-	/* background-color: rgb(195, 29, 162); */
-	border: solid rgb(64, 0, 255);
 	border-width: 0px 0px 0px 0px;
 }
